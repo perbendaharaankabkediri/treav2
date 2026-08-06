@@ -1,0 +1,1439 @@
+/* @import 'primereact/resources/themes/lara-light-blue/theme.css';
+@import 'primereact/resources/primereact.min.css';
+@import 'primeicons/primeicons.css'; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* Brand: midnight carries identity, indigo carries interaction. */
+    --trea-brand-midnight: #172554;
+    --trea-brand-navy: #1e3a8a;
+    --trea-primary: #4f46e5;
+    --trea-primary-hover: #4338ca;
+    --trea-primary-active: #3730a3;
+    --trea-primary-soft: #eef2ff;
+    --trea-primary-subtle: #f5f3ff;
+    --trea-primary-ring: rgba(79, 70, 229, 0.18);
+
+    /* Neutral surfaces keep dense financial data calm and legible. */
+    --trea-surface-ground: #f6f7fb;
+    --trea-surface-section: #f8fafc;
+    --trea-surface-card: #ffffff;
+    --trea-surface-overlay: #ffffff;
+    --trea-surface-hover: #f8fafc;
+    --trea-surface-selected: #eef2ff;
+    --trea-surface-muted: #f1f5f9;
+    --trea-surface-border: #e2e8f0;
+    --trea-surface-border-strong: #cbd5e1;
+    --trea-surface-border-hover: #a5b4fc;
+
+    --trea-text: #475569;
+    --trea-text-strong: #172033;
+    --trea-text-heading: #0f172a;
+    --trea-text-muted: #64748b;
+    --trea-text-placeholder: #94a3b8;
+    --trea-text-disabled: #cbd5e1;
+
+    /* Semantic colors stay distinct from brand and chart colors. */
+    --trea-success: #059669;
+    --trea-success-hover: #047857;
+    --trea-success-soft: #ecfdf5;
+    --trea-warning: #d97706;
+    --trea-warning-hover: #b45309;
+    --trea-warning-soft: #fffbeb;
+    --trea-danger: #e11d48;
+    --trea-danger-hover: #be123c;
+    --trea-danger-soft: #fff1f2;
+    --trea-info: #0284c7;
+    --trea-info-hover: #0369a1;
+    --trea-info-soft: #f0f9ff;
+
+    /* Ordered for clear contrast between adjacent data series. */
+    --trea-chart-1: #4f46e5;
+    --trea-chart-2: #0d9488;
+    --trea-chart-3: #f59e0b;
+    --trea-chart-4: #e11d48;
+    --trea-chart-5: #0284c7;
+    --trea-chart-6: #7c3aed;
+    --trea-chart-grid: #e9edf5;
+    --trea-chart-axis: #94a3b8;
+
+    --trea-radius-sm: 8px;
+    --trea-radius-md: 10px;
+    --trea-radius-lg: 16px;
+    --trea-radius-xl: 20px;
+    --trea-radius: var(--trea-radius-lg);
+
+    --trea-control-height: 42px;
+    --trea-control-height-sm: 36px;
+    --trea-control-height-lg: 48px;
+
+    --trea-transition-fast: 150ms ease;
+    --trea-transition: 200ms ease;
+
+    --trea-shadow-card: 0 1px 2px rgba(15, 23, 42, 0.025), 0 8px 24px rgba(15, 23, 42, 0.035);
+    --trea-shadow-card-hover: 0 2px 4px rgba(15, 23, 42, 0.04), 0 16px 36px rgba(15, 23, 42, 0.08);
+    --trea-shadow-overlay: 0 18px 48px rgba(15, 23, 42, 0.14), 0 4px 12px rgba(15, 23, 42, 0.06);
+
+    --trea-topbar-height: 64px;
+    --trea-sidebar-width: 240px;
+    --trea-sidebar-collapsed-width: 64px;
+    --trea-layout-gutter: 1.25rem;
+
+    /* PrimeReact bridge: Trea tokens remain the source of truth. */
+    --primary-color: var(--trea-primary);
+    --primary-color-text: #ffffff;
+    --surface-ground: var(--trea-surface-ground);
+    --surface-card: var(--trea-surface-card);
+    --surface-overlay: var(--trea-surface-overlay);
+    --surface-border: var(--trea-surface-border);
+    --text-color: var(--trea-text);
+    --text-color-secondary: var(--trea-text-muted);
+    --focus-ring: 0 0 0 0.2rem var(--trea-primary-ring);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--trea-surface-ground);
+    color: var(--trea-text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+/*
+ * Typography floor for legacy dense views. New UI should use text-[11px]
+ * directly; these aliases keep older 9–10px utilities readable while pages
+ * are migrated incrementally.
+ */
+.text-\[9px\],
+.text-\[10px\] {
+    font-size: 0.6875rem;
+    line-height: 1rem;
+}
+
+.trea-layout {
+    min-height: 100vh;
+    background: var(--trea-surface-ground);
+    background-image:
+        radial-gradient(circle at 92% 4%, rgba(79, 70, 229, 0.045), transparent 24rem),
+        radial-gradient(circle at 18% 100%, rgba(13, 148, 136, 0.025), transparent 28rem);
+}
+
+.trea-topbar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    display: flex;
+    height: var(--trea-topbar-height);
+    align-items: center;
+    border-bottom: 1px solid var(--trea-surface-border);
+    background: rgba(255, 255, 255, 0.96);
+    padding: 0 1.25rem;
+    backdrop-filter: blur(12px);
+}
+
+.trea-brand {
+    display: flex;
+    width: calc(var(--trea-sidebar-width) - 1.25rem);
+    min-width: calc(var(--trea-sidebar-width) - 1.25rem);
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.trea-brand-logo {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+}
+
+.trea-brand-name {
+    color: #1e293b;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.trea-icon-button {
+    display: inline-flex;
+    height: 2.5rem;
+    width: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #64748b;
+    cursor: pointer;
+    transition:
+        background-color 160ms ease,
+        color 160ms ease;
+}
+
+.trea-icon-button:hover {
+    background: #f1f5f9;
+    color: var(--trea-primary);
+}
+
+.trea-topbar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.trea-fiscal-year {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: 10px;
+    background: #fff;
+    padding: 0.55rem 0.8rem;
+    color: #475569;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.trea-user-button {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    padding: 0.35rem 0.5rem;
+    cursor: pointer;
+}
+
+.trea-user-button:hover {
+    background: #f8fafc;
+}
+
+.trea-user-avatar {
+    display: flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: var(--trea-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.trea-user-meta {
+    min-width: 0;
+    text-align: left;
+}
+
+.trea-user-name {
+    color: #334155;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.trea-user-role {
+    margin-top: 0.1rem;
+    color: #94a3b8;
+    font-size: 0.6875rem;
+}
+
+.trea-sidebar {
+    position: fixed;
+    top: calc(var(--trea-topbar-height) + 1rem);
+    bottom: 1rem;
+    left: 0.8rem;
+    z-index: 40;
+    width: var(--trea-sidebar-width);
+    overflow: hidden;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius);
+    background: #fff;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.04);
+    transition:
+        width 200ms ease,
+        transform 200ms ease;
+}
+
+.trea-sidebar.collapsed {
+    width: var(--trea-sidebar-collapsed-width);
+}
+
+.trea-sidebar-scroll {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1rem 0.75rem;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.trea-menu-group + .trea-menu-group {
+    margin-top: 1rem;
+}
+
+.trea-menu-label {
+    margin: 0 0.65rem 0.45rem;
+    color: #64748b;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.trea-menu-item {
+    display: flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 0.625rem;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    padding: 0.625rem 0.7rem;
+    color: #475569;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease;
+}
+
+.trea-menu-item:hover {
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.trea-menu-item.active {
+    border-color: #c7d2fe;
+    background: #f5f3ff;
+    color: var(--trea-primary);
+    font-weight: 700;
+}
+
+.trea-menu-item.active-parent {
+    color: var(--trea-primary);
+    font-weight: 700;
+}
+
+.trea-menu-category-trigger {
+    width: 100%;
+    text-align: left;
+}
+
+.trea-menu-category-trigger .trea-menu-item-text {
+    text-align: left;
+}
+
+.trea-menu-category-chevron {
+    flex: 0 0 auto;
+    color: #94a3b8;
+    transition: transform 160ms ease;
+}
+
+.trea-menu-category-chevron.open {
+    transform: rotate(180deg);
+}
+
+.trea-menu-children {
+    position: relative;
+    margin: 0.25rem 0 0.4rem 1.05rem;
+    padding-left: 0.75rem;
+}
+
+.trea-menu-children::before {
+    position: absolute;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: 0;
+    width: 1px;
+    background: #e2e8f0;
+    content: '';
+}
+
+.trea-menu-item.nested {
+    min-height: 36px;
+    border-color: transparent;
+    padding: 0.45rem 0.65rem;
+    font-size: 0.75rem;
+}
+
+.trea-menu-item.nested .trea-menu-item-icon {
+    width: 15px;
+    height: 15px;
+}
+
+.trea-menu-flyout {
+    position: fixed;
+    z-index: 90;
+    width: 220px;
+    padding: 0.55rem;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: 0.85rem;
+    background: #fff;
+    box-shadow: var(--trea-shadow-overlay);
+}
+
+.trea-menu-flyout-title {
+    padding: 0.35rem 0.65rem 0.5rem;
+    color: #64748b;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.trea-menu-item-icon {
+    flex: 0 0 auto;
+}
+
+.trea-menu-item-text {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trea-sidebar.collapsed .trea-menu-label,
+.trea-sidebar.collapsed .trea-menu-item-text,
+.trea-sidebar.collapsed .trea-menu-category-chevron {
+    display: none;
+}
+
+.trea-sidebar.collapsed .trea-menu-item {
+    justify-content: center;
+    padding-inline: 0.5rem;
+}
+
+.trea-content-shell {
+    min-height: 100vh;
+    padding-top: var(--trea-topbar-height);
+    padding-left: calc(var(--trea-sidebar-width) + var(--trea-layout-gutter));
+    transition: padding-left 200ms ease;
+}
+
+.trea-layout.sidebar-collapsed .trea-content-shell {
+    padding-left: calc(var(--trea-sidebar-collapsed-width) + var(--trea-layout-gutter));
+}
+
+.trea-content {
+    width: 100%;
+    max-width: 1720px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.trea-page-transition {
+    animation: trea-page-enter 140ms ease-out both;
+}
+
+@keyframes trea-page-enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.trea-page-heading {
+    margin-bottom: 1.25rem;
+}
+
+.trea-page-title {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.trea-page-subtitle {
+    margin: 0.35rem 0 0;
+    color: #64748b;
+    font-size: 0.8125rem;
+}
+
+.trea-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 35;
+    display: none;
+    background: rgba(15, 23, 42, 0.35);
+}
+
+.trea-profile-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 190px;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: 12px;
+    background: #fff;
+    padding: 0.4rem;
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.12);
+}
+
+.trea-profile-link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.65rem;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    padding: 0.7rem 0.75rem;
+    color: #475569;
+    font-size: 0.8125rem;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.trea-profile-link:hover {
+    background: #f8fafc;
+    color: #1e293b;
+}
+
+.trea-notification-badge {
+    position: absolute;
+    top: 0.15rem;
+    right: 0;
+    display: inline-flex;
+    min-width: 1rem;
+    height: 1rem;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: #e11d48;
+    padding: 0 0.2rem;
+    color: #fff;
+    font-size: 0.5625rem;
+    font-weight: 800;
+}
+
+.trea-activity-center {
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    right: 0;
+    width: min(26rem, calc(100vw - 1.5rem));
+    overflow: hidden;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--trea-shadow-overlay);
+}
+
+.trea-activity-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.trea-activity-read-all {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.3rem;
+    border: 0;
+    background: transparent;
+    color: var(--trea-primary);
+    font-size: 0.6875rem;
+    font-weight: 700;
+}
+
+.trea-activity-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-block: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.trea-activity-tabs button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    padding: 0.7rem;
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.trea-activity-tabs button.active {
+    border-color: var(--trea-primary);
+    background: #fff;
+    color: var(--trea-primary);
+}
+
+.trea-activity-tabs button span {
+    border-radius: 999px;
+    background: #e11d48;
+    padding: 0.05rem 0.35rem;
+    color: #fff;
+    font-size: 0.5625rem;
+}
+
+.trea-activity-list {
+    max-height: min(28rem, calc(100vh - 14rem));
+    overflow-y: auto;
+}
+
+.trea-activity-item {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0.75rem;
+    border: 0;
+    border-bottom: 1px solid #f1f5f9;
+    background: #fff;
+    padding: 0.85rem 1rem;
+    text-align: left;
+}
+
+button.trea-activity-item {
+    cursor: pointer;
+}
+
+.trea-activity-item.unread {
+    background: #f5f3ff;
+}
+
+button.trea-activity-item:hover {
+    background: #f8fafc;
+}
+
+.trea-severity-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.trea-severity-icon.warning {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.trea-severity-icon.critical {
+    background: #fff1f2;
+    color: #e11d48;
+}
+
+.trea-log-status {
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: 0 0 auto;
+    margin-top: 0.3rem;
+    border-radius: 999px;
+    background: #10b981;
+}
+
+.trea-log-status.failed {
+    background: #e11d48;
+}
+
+.trea-activity-footer {
+    display: block;
+    padding: 0.75rem;
+    color: var(--trea-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+}
+
+.trea-activity-footer:hover {
+    background: #f8fafc;
+}
+
+.trea-card {
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius);
+    background: var(--trea-surface-card);
+    box-shadow: var(--trea-shadow-card);
+}
+
+.trea-card-body {
+    padding: 1.25rem;
+}
+
+/* PrimeReact Toast, reskinned with Trea surfaces and semantic tokens. */
+.trea-toast {
+    width: min(25rem, calc(100vw - 2rem));
+}
+
+.trea-toast .p-toast-message {
+    overflow: hidden;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius-lg);
+    background: rgba(255, 255, 255, 0.98);
+    color: var(--trea-text);
+    box-shadow: var(--trea-shadow-overlay);
+    backdrop-filter: blur(16px);
+}
+
+.trea-toast .p-toast-message-content {
+    align-items: flex-start;
+    gap: 0.75rem;
+    border-width: 0 0 0 4px;
+    padding: 0.95rem 1rem;
+}
+
+.trea-toast .p-toast-summary {
+    color: var(--trea-text-heading);
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.trea-toast .p-toast-detail {
+    margin-top: 0.2rem;
+    color: var(--trea-text-muted);
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+.trea-toast .p-toast-icon-close {
+    height: 1.75rem;
+    width: 1.75rem;
+    border-radius: 0.5rem;
+    color: var(--trea-text-placeholder);
+}
+
+.trea-toast .p-toast-message-success .p-toast-message-content {
+    border-color: var(--trea-success);
+}
+
+.trea-toast .p-toast-message-info .p-toast-message-content {
+    border-color: var(--trea-info);
+}
+
+.trea-toast .p-toast-message-warn .p-toast-message-content {
+    border-color: var(--trea-warning);
+}
+
+.trea-toast .p-toast-message-error .p-toast-message-content {
+    border-color: var(--trea-danger);
+}
+
+/* PrimeReact Dialog, composed like Sakai and skinned for Trea. */
+.p-dialog-mask {
+    background: rgba(15, 23, 42, 0.42);
+    padding: 1rem;
+    backdrop-filter: blur(3px);
+}
+
+.trea-dialog {
+    width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    overflow: hidden;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: var(--trea-radius-lg);
+    background: var(--trea-surface-overlay);
+    box-shadow: var(--trea-shadow-overlay);
+}
+
+.trea-dialog-sm {
+    max-width: 24rem;
+}
+
+.trea-dialog-md {
+    max-width: 32rem;
+}
+
+.trea-dialog-lg {
+    max-width: 42rem;
+}
+
+.trea-dialog-xl {
+    max-width: 56rem;
+}
+
+.trea-dialog-2xl {
+    max-width: 72rem;
+}
+
+.trea-dialog-full {
+    width: calc(100vw - 2rem);
+    max-width: none;
+    height: calc(100vh - 2rem);
+}
+
+.trea-dialog .p-dialog-header {
+    border-bottom: 1px solid var(--trea-surface-border);
+    background: var(--trea-surface-overlay);
+    padding: 1rem 1.25rem;
+}
+
+.trea-dialog .p-dialog-header-icons {
+    align-self: flex-start;
+}
+
+.trea-dialog .p-dialog-header-icon {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 0.625rem;
+    color: var(--trea-text-placeholder);
+}
+
+.trea-dialog .p-dialog-header-icon:hover {
+    background: var(--trea-surface-muted);
+    color: var(--trea-text-strong);
+}
+
+.trea-dialog .p-dialog-content {
+    background: var(--trea-surface-overlay);
+    padding: 1.25rem;
+    color: var(--trea-text);
+}
+
+.trea-dialog-scrollable .p-dialog-content {
+    overflow-y: auto;
+}
+
+.trea-dialog .p-dialog-footer {
+    border-top: 1px solid var(--trea-surface-border);
+    background: var(--trea-surface-section);
+    padding: 0.875rem 1.25rem;
+}
+
+.trea-skeleton.p-skeleton {
+    background: #edf0f6;
+}
+
+.trea-skeleton.p-skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+}
+
+/* PrimeReact DataTable with Trea's compact financial-data rhythm. */
+.trea-datatable .p-datatable {
+    border: 0;
+    background: transparent;
+    color: var(--trea-text);
+    font-size: 0.75rem;
+}
+
+.trea-datatable .p-datatable-wrapper {
+    border-radius: inherit;
+}
+
+.trea-datatable .p-datatable-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.trea-datatable .p-datatable-thead > tr > th {
+    border-width: 0 0 1px;
+    border-color: var(--trea-surface-border);
+    background: var(--trea-surface-section);
+    padding: 0.75rem;
+    color: var(--trea-text-muted);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+}
+
+.trea-datatable .p-datatable-tbody > tr {
+    background: var(--trea-surface-card);
+    color: var(--trea-text);
+    transition:
+        background-color var(--trea-transition-fast),
+        box-shadow var(--trea-transition-fast);
+}
+
+.trea-datatable .p-datatable-tbody > tr:hover {
+    background: var(--trea-surface-hover);
+}
+
+.trea-datatable .p-datatable-tbody > tr > td {
+    border-width: 0 0 1px;
+    border-color: #f1f5f9;
+    padding: 0.75rem;
+    line-height: 1.4;
+}
+
+.trea-datatable .p-datatable-tbody > tr:last-child > td {
+    border-bottom: 0;
+}
+
+.trea-datatable .p-sortable-column:focus {
+    box-shadow: inset 0 0 0 2px var(--trea-primary-ring);
+}
+
+.trea-datatable .p-sortable-column .p-sortable-column-icon {
+    height: 0.75rem;
+    width: 0.75rem;
+    color: var(--trea-text-placeholder);
+}
+
+.trea-datatable .p-paginator {
+    justify-content: flex-end;
+    gap: 0.2rem;
+    border-width: 1px 0 0;
+    border-color: var(--trea-surface-border);
+    background: var(--trea-surface-section);
+    padding: 0.65rem 0.85rem;
+    color: var(--trea-text-muted);
+    font-size: 0.6875rem;
+}
+
+.trea-datatable .p-paginator .p-paginator-page,
+.trea-datatable .p-paginator .p-paginator-first,
+.trea-datatable .p-paginator .p-paginator-prev,
+.trea-datatable .p-paginator .p-paginator-next,
+.trea-datatable .p-paginator .p-paginator-last {
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 0.625rem;
+}
+
+.trea-datatable .p-paginator .p-highlight {
+    background: var(--trea-primary-soft);
+    color: var(--trea-primary);
+}
+
+.trea-datatable .p-datatable-numeric {
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1023px) {
+    .trea-brand {
+        width: auto;
+        min-width: 0;
+    }
+
+    .trea-brand-name {
+        display: none;
+    }
+
+    .trea-sidebar,
+    .trea-sidebar.collapsed {
+        top: calc(var(--trea-topbar-height) + 0.75rem);
+        bottom: 0.75rem;
+        left: 0.75rem;
+        width: min(290px, calc(100vw - 1.5rem));
+        transform: translateX(calc(-100% - 1rem));
+    }
+
+    .trea-sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .trea-content-shell,
+    .trea-layout.sidebar-collapsed .trea-content-shell {
+        padding-left: 0;
+    }
+
+    .trea-overlay.visible {
+        display: block;
+    }
+
+    .trea-content {
+        padding: 1rem;
+    }
+
+    .trea-fiscal-year {
+        display: none;
+    }
+}
+
+@media (max-width: 639px) {
+    .trea-topbar {
+        padding-inline: 0.75rem;
+    }
+
+    .trea-user-meta {
+        display: none;
+    }
+
+    .trea-page-title {
+        font-size: 1.3rem;
+    }
+}
+
+.trea-dropdown-field {
+    width: 100%;
+    min-width: 0;
+}
+
+.trea-field-label {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 0.375rem;
+    color: var(--trea-text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+}
+
+.trea-field-required {
+    color: var(--trea-danger);
+}
+
+.trea-field-helper,
+.trea-field-error {
+    margin: 0.375rem 0 0;
+    font-size: 0.6875rem;
+    line-height: 1.1rem;
+}
+
+.trea-field-helper {
+    color: var(--trea-text-placeholder);
+}
+
+.trea-field-error {
+    color: var(--trea-danger);
+}
+
+.trea-dropdown-control {
+    position: relative;
+    width: 100%;
+}
+
+.trea-dropdown-leading-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.8rem;
+    z-index: 2;
+    pointer-events: none;
+    color: var(--trea-text-placeholder);
+    transform: translateY(-50%);
+    transition:
+        color var(--trea-transition-fast),
+        opacity var(--trea-transition-fast);
+}
+
+.trea-dropdown-control:focus-within .trea-dropdown-leading-icon {
+    color: var(--trea-primary);
+}
+
+.trea-dropdown-field-disabled .trea-dropdown-leading-icon {
+    opacity: 0.5;
+}
+
+.trea-dropdown.p-dropdown {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius-md);
+    background: var(--trea-surface-card);
+    box-shadow: none;
+    transition:
+        border-color var(--trea-transition-fast),
+        box-shadow var(--trea-transition-fast),
+        background-color var(--trea-transition-fast);
+}
+
+.trea-dropdown.p-dropdown:not(.p-disabled):hover {
+    border-color: var(--trea-surface-border-hover);
+}
+
+.trea-dropdown.p-dropdown:not(.p-disabled).p-focus {
+    border-color: var(--trea-primary);
+    box-shadow: 0 0 0 3px var(--trea-primary-ring);
+}
+
+.trea-dropdown.p-dropdown.p-disabled {
+    cursor: not-allowed;
+    border-color: var(--trea-surface-border);
+    background: #f8fafc;
+    opacity: 0.7;
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-label {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    border: 0;
+    background: transparent;
+    color: var(--trea-text);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    box-shadow: none;
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-label.p-placeholder,
+.trea-dropdown-placeholder {
+    color: var(--trea-text-placeholder);
+}
+
+.trea-dropdown-selected-value {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--trea-text);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trea-dropdown-with-icon.p-dropdown .p-dropdown-label {
+    padding-left: 2.45rem;
+}
+
+.trea-dropdown-sm.p-dropdown {
+    min-height: var(--trea-control-height-sm);
+}
+
+.trea-dropdown-sm.p-dropdown .p-dropdown-label {
+    padding: 0.45rem 0.7rem;
+    font-size: 0.8125rem;
+}
+
+.trea-dropdown-md.p-dropdown {
+    min-height: var(--trea-control-height);
+}
+
+.trea-dropdown-md.p-dropdown .p-dropdown-label {
+    padding: 0.6rem 0.75rem;
+}
+
+.trea-dropdown-lg.p-dropdown {
+    min-height: var(--trea-control-height-lg);
+}
+
+.trea-dropdown-lg.p-dropdown .p-dropdown-label {
+    padding: 0.75rem 0.875rem;
+    font-size: 0.875rem;
+}
+
+.trea-dropdown-with-icon.trea-dropdown-sm.p-dropdown .p-dropdown-label,
+.trea-dropdown-with-icon.trea-dropdown-md.p-dropdown .p-dropdown-label,
+.trea-dropdown-with-icon.trea-dropdown-lg.p-dropdown .p-dropdown-label {
+    padding-left: 2.45rem;
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-trigger {
+    display: flex;
+    width: 2.75rem;
+    flex: 0 0 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 var(--trea-radius-md) var(--trea-radius-md) 0;
+    background: transparent;
+    color: var(--trea-text-placeholder);
+    transition:
+        color var(--trea-transition-fast),
+        background-color var(--trea-transition-fast);
+}
+
+.trea-dropdown.p-dropdown:not(.p-disabled):hover .p-dropdown-trigger,
+.trea-dropdown.p-dropdown.p-focus .p-dropdown-trigger {
+    color: var(--trea-primary);
+}
+
+.trea-dropdown.p-dropdown:not(.p-disabled) .p-dropdown-trigger:hover {
+    background: var(--trea-primary-soft);
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-trigger-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-clear-icon {
+    right: 2.65rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    color: var(--trea-text-placeholder);
+    transition: color var(--trea-transition-fast);
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-clear-icon:hover {
+    color: var(--trea-danger);
+}
+
+.trea-dropdown.p-dropdown.p-dropdown-clearable .p-dropdown-label {
+    padding-right: 2.25rem;
+}
+
+.trea-dropdown.p-dropdown.p-invalid,
+.trea-dropdown.p-dropdown.trea-dropdown-invalid {
+    border-color: var(--trea-danger);
+}
+
+.trea-dropdown.p-dropdown.p-invalid:not(.p-disabled).p-focus,
+.trea-dropdown.p-dropdown.trea-dropdown-invalid:not(.p-disabled).p-focus {
+    border-color: var(--trea-danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.trea-dropdown-control:has(.trea-dropdown-invalid) .trea-dropdown-leading-icon {
+    color: var(--trea-danger);
+}
+
+.trea-dropdown.p-dropdown .p-dropdown-trigger .p-dropdown-trigger-icon {
+    transition: transform var(--trea-transition-fast);
+}
+
+.trea-dropdown.p-dropdown.p-focus .p-dropdown-trigger .p-dropdown-trigger-icon {
+    transform: rotate(180deg);
+}
+
+.trea-dropdown-panel.p-dropdown-panel {
+    overflow: hidden;
+    margin-top: 0.35rem;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius-md);
+    background: var(--trea-surface-overlay);
+    box-shadow: var(--trea-shadow-overlay);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header {
+    border: 0;
+    border-bottom: 1px solid var(--trea-surface-border);
+    background: var(--trea-surface-overlay);
+    padding: 0.75rem;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid var(--trea-surface-border);
+    border-radius: var(--trea-radius-sm);
+    background: #f8fafc;
+    padding: 0.55rem 2.25rem 0.55rem 0.75rem;
+    color: var(--trea-text);
+    font-size: 0.8125rem;
+    outline: none;
+    box-shadow: none;
+    transition:
+        border-color var(--trea-transition-fast),
+        box-shadow var(--trea-transition-fast),
+        background-color var(--trea-transition-fast);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header .p-dropdown-filter::placeholder {
+    color: var(--trea-text-placeholder);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header .p-dropdown-filter:hover {
+    border-color: var(--trea-surface-border-hover);
+    background: #fff;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header .p-dropdown-filter:focus {
+    border-color: var(--trea-primary);
+    background: #fff;
+    box-shadow: 0 0 0 3px var(--trea-primary-ring);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-header .p-dropdown-filter-icon {
+    right: 0.8rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    color: var(--trea-text-placeholder);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items {
+    padding: 0.4rem;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    margin: 0;
+    border: 0;
+    border-radius: var(--trea-radius-sm);
+    background: transparent;
+    padding: 0.6rem 0.75rem;
+    color: var(--trea-text);
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    transition:
+        color var(--trea-transition-fast),
+        background-color var(--trea-transition-fast);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+    background: var(--trea-surface-hover);
+    color: var(--trea-text-strong);
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: var(--trea-surface-selected);
+    color: var(--trea-primary);
+    font-weight: 600;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus {
+    box-shadow: inset 0 0 0 1px var(--trea-primary);
+}
+
+.trea-dropdown-option {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.12rem;
+}
+
+.trea-dropdown-option-label {
+    min-width: 0;
+    overflow: hidden;
+    color: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trea-dropdown-option-description {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--trea-text-placeholder);
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-item.p-highlight .trea-dropdown-option-description {
+    color: var(--trea-primary);
+    opacity: 0.75;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message {
+    padding: 1rem;
+    color: var(--trea-text-placeholder);
+    font-size: 0.8125rem;
+    text-align: center;
+}
+
+.trea-dropdown-panel.p-dropdown-panel .p-dropdown-items .p-dropdown-item-group {
+    margin: 0.3rem 0;
+    border-radius: var(--trea-radius-sm);
+    background: #f8fafc;
+    padding: 0.55rem 0.75rem;
+    color: var(--trea-text-muted);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.trea-dropdown-panel.p-connected-overlay-enter {
+    animation: trea-dropdown-enter 150ms ease-out;
+}
+
+.trea-dropdown-panel.p-connected-overlay-exit {
+    animation: trea-dropdown-exit 120ms ease-in;
+}
+
+@keyframes trea-dropdown-enter {
+    from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes trea-dropdown-exit {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-3px) scale(0.99);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trea-page-transition {
+        animation: none !important;
+    }
+
+    .trea-dropdown,
+    .trea-dropdown-leading-icon,
+    .trea-dropdown-panel,
+    .trea-dropdown-panel * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Inertia navigation progress, kept visible through the first painted frame. */
+.trea-navigation-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 9999;
+    height: 3px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.trea-navigation-progress.visible {
+    opacity: 1;
+}
+
+.trea-navigation-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed 55%, #0ea5e9);
+    box-shadow:
+        0 0 10px #6366f1,
+        0 0 5px #6366f1;
+    transition: width 180ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trea-navigation-progress,
+    .trea-navigation-progress-bar {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+    }
+}
